@@ -1,4 +1,6 @@
 import axios from "axios";
+const PYTHON_API = process.env.PYTHON_API;
+
 
 const chatWithVideo = async (req, res) => {
 
