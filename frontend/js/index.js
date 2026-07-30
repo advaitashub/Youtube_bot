@@ -4,7 +4,7 @@ const askBtn = document.getElementById("askBtn");
 const chatBox = document.getElementById("chatBox");
 const linkInput = document.getElementById("link");
 const questionInput = document.getElementById("question");
-const BACKEND_URL="https://youtubebot-production.up.railway.app/"
+const BACKEND_URL="https://zoological-spontaneity-production-b07d.up.railway.app/"
 // ----------------------------
 // Add AI Message
 // ----------------------------
