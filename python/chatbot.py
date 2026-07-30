@@ -4,7 +4,6 @@ import re
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from langchain_core.output_parsers import StrOutputParser
-from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
@@ -12,6 +11,7 @@ from youtube_transcript_api._errors import (
     TranscriptsDisabled,
     NoTranscriptFound,
     VideoUnavailable,
+    YouTubeTranscriptApi
 )
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda
@@ -20,8 +20,6 @@ load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-vector_store = None
-retrieval_chain = None
 
 def format_docs(docs):
     return "\n\n".join(doc.page_content for doc in docs)
@@ -138,17 +136,15 @@ def create_chain(vector_store):
     temperature=0
 )
 
-    prompt = ChatPromptTemplate.from_template("""You are an expert YouTube assistant.
+    prompt = ChatPromptTemplate.from_template("""
+You are an expert YouTube assistant.
 
-Use ONLY the provided transcript context.
+Answer only using the transcript context.
 
-If the answer is not present, say:
+If the answer is not available in the transcript, say:
 "I couldn't find that information in the video."
- 
-else try to get data from web
-Do not invent facts.
 
-When appropriate, summarize clearly using bullet points.
+Do not hallucinate.
 
 Context:
 {context}
