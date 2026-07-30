@@ -95,7 +95,7 @@ sendBtn.addEventListener("click", async () => {
 
     try {
 
-        const response = await fetch(`${BACKEND_URL}/chat`, {
+        const response = await fetch(`${BACKEND_URL}/api/chat`, {
 
             method: "POST",
 
@@ -146,7 +146,7 @@ askBtn.addEventListener("click", async () => {
 
     try {
 
-        const response = await fetch(`${BACKEND_URL}/question`, {
+        const response = await fetch(`${BACKEND_URL}/api/question`, {
 
             method: "POST",
 
