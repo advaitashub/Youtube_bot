@@ -2,7 +2,7 @@ import os
 import re
 
 from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_groq import ChatGroq
 from langchain_core.output_parsers import StrOutputParser
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -18,7 +18,7 @@ from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 
 load_dotenv()
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 vector_store = None
 retrieval_chain = None
@@ -133,10 +133,10 @@ def create_chain(vector_store):
     }
 )
 
-    llm = ChatGoogleGenerativeAI(
-        model="gemini-3.5-flash",
-        temperature=0.7
-    )
+    llm = llm = ChatGroq(
+    model="llama-3.1-8b-instant",
+    temperature=0
+)
 
     prompt = ChatPromptTemplate.from_template("""You are an expert YouTube assistant.
 
