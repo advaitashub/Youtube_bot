@@ -7,7 +7,7 @@ const askQuestion = async (req, res) => {
         const { question } = req.body;
 
         const response = await axios.post(
-            "http://127.0.0.1:8000/question",
+            `${PYTHON_API}/question`,
             { question }
         );
 

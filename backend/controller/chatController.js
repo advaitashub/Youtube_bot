@@ -7,7 +7,7 @@ const chatWithVideo = async (req, res) => {
         const { url } = req.body;
 
         const response = await axios.post(
-            "http://127.0.0.1:8000/chat",
+            `${PYTHON_API}/chat`,
             { url }
         );
 
