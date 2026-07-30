@@ -1,32 +1,76 @@
+````markdown
 # 🎥 YouTube Chat Bot
 
-An AI-powered chatbot that allows users to chat with any YouTube video using its transcript. Simply paste a YouTube video URL, and the application retrieves the transcript, creates vector embeddings, and answers questions using Google's Gemini LLM with Retrieval-Augmented Generation (RAG).
+![Python](https://img.shields.io/badge/Python-3.11-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688)
+![Node.js](https://img.shields.io/badge/Node.js-Express-green)
+![LangChain](https://img.shields.io/badge/LangChain-RAG-orange)
+![Groq](https://img.shields.io/badge/Groq-LLM-black)
+![FAISS](https://img.shields.io/badge/FAISS-VectorDB-red)
+![License](https://img.shields.io/badge/License-MIT-blue)
+
+An AI-powered Retrieval-Augmented Generation (RAG) application that allows users to **chat with any YouTube video that has an available transcript**. Simply paste a YouTube URL, and the application retrieves the transcript, creates vector embeddings, and answers your questions using **Groq LLM**, **Google Gemini Embeddings**, and **LangChain**.
 
 ---
 
-## ✨ Features
+# ✨ Features
 
-- 📺 Chat with any YouTube video
+- 📺 Chat with YouTube videos using their transcripts
 - 📝 Automatic transcript extraction
+- ✂️ Intelligent text chunking
 - 🔍 Semantic search using FAISS vector database
-- 🤖 AI-powered responses with Google Gemini
-- ⚡ FastAPI backend for LLM processing
-- 🌐 Node.js & Express API server
-- 🎨 Responsive frontend built with HTML, Tailwind CSS, and JavaScript
-- 🧠 Retrieval-Augmented Generation (RAG) architecture
+- ⚡ High-speed AI inference with Groq
+- 🧠 Google Gemini Embeddings for vector generation
+- 🤖 Retrieval-Augmented Generation (RAG)
+- 🌐 REST API built with Node.js & Express
+- 🚀 FastAPI-powered AI backend
+- 🎨 Responsive frontend built using HTML, Tailwind CSS and JavaScript
 
 ---
 
-## 🏗️ Project Structure
+# 🏗️ Architecture
 
+```text
+                     User
+                       │
+                       ▼
+          Frontend (HTML + Tailwind + JS)
+                       │
+                       ▼
+              Node.js + Express API
+                       │
+                       ▼
+            FastAPI + LangChain Service
+                       │
+         ┌─────────────┴──────────────┐
+         │                            │
+         ▼                            ▼
+YouTube Transcript API       Gemini Embeddings
+         │                            │
+         └─────────────┬──────────────┘
+                       ▼
+                    FAISS
+                       │
+                       ▼
+              Groq LLM (Llama 3)
+                       │
+                       ▼
+                 AI Generated Answer
 ```
+
+---
+
+# 🏗️ Project Structure
+
+```text
 Youtube_bot/
 │
-├── backend/                 # Node.js + Express API
+├── backend/
 │   ├── controllers/
 │   ├── routes/
 │   ├── server.js
-│   └── package.json
+│   ├── package.json
+│   └── .env
 │
 ├── frontend/
 │   ├── index.html
@@ -34,7 +78,7 @@ Youtube_bot/
 │   │   └── index.js
 │   └── styles/
 │
-├── python/                  # FastAPI + LangChain
+├── python/
 │   ├── main.py
 │   ├── chatbot.py
 │   ├── requirements.txt
@@ -45,45 +89,50 @@ Youtube_bot/
 
 ---
 
-## 🛠️ Tech Stack
+# 🛠️ Tech Stack
 
-### Frontend
+## Frontend
+
 - HTML5
 - Tailwind CSS
 - JavaScript
 
-### Backend
+## Backend
+
 - Node.js
 - Express.js
 
-### AI Backend
+## AI Backend
+
 - FastAPI
 - LangChain
-- Google Gemini 2.5 Flash
-- Gemini Embeddings
-- FAISS
+- Groq API
+- Llama 3 (via Groq)
+- Google Gemini Embeddings
+- FAISS Vector Store
 - YouTube Transcript API
 
 ---
 
-## ⚙️ How It Works
+# ⚙️ How It Works
 
 1. User enters a YouTube video URL.
-2. Node.js sends the URL to the Python FastAPI service.
-3. The transcript is fetched using the YouTube Transcript API.
-4. The transcript is split into smaller chunks.
-5. Gemini Embeddings convert the chunks into vectors.
-6. FAISS stores the embeddings for semantic retrieval.
+2. Node.js sends the URL to the FastAPI backend.
+3. The transcript is extracted using the YouTube Transcript API.
+4. LangChain splits the transcript into smaller chunks.
+5. Google Gemini Embeddings converts each chunk into vector embeddings.
+6. FAISS stores those embeddings.
 7. When the user asks a question:
-   - Relevant transcript chunks are retrieved.
-   - Gemini generates an answer using only the retrieved context.
+   - Relevant transcript chunks are retrieved using similarity search.
+   - The retrieved context is passed to the Groq LLM.
+   - Groq generates an answer based only on the retrieved transcript context.
 8. The response is returned to the frontend.
 
 ---
 
-## 🚀 Installation
+# 🚀 Installation
 
-### 1. Clone the Repository
+## 1. Clone the Repository
 
 ```bash
 git clone https://github.com/YOUR_USERNAME/Youtube-ChatBot.git
@@ -93,7 +142,7 @@ cd Youtube-ChatBot
 
 ---
 
-## Backend Setup
+# Backend Setup
 
 ```bash
 cd backend
@@ -103,7 +152,7 @@ npm install
 npm run dev
 ```
 
-Backend runs on:
+Server starts at
 
 ```
 http://localhost:3000
@@ -111,15 +160,13 @@ http://localhost:3000
 
 ---
 
-## Python AI Server Setup
+# Python AI Backend
 
-Create a virtual environment:
+Create a virtual environment
 
 ```bash
 python -m venv venv
 ```
-
-Activate it.
 
 ### Windows
 
@@ -133,25 +180,26 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-Install dependencies:
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Create a `.env` file:
+Create a `.env` file inside the **python** folder.
 
 ```env
-GOOGLE_API_KEY=YOUR_API_KEY
+GOOGLE_API_KEY=YOUR_GEMINI_API_KEY
+GROQ_API_KEY=YOUR_GROQ_API_KEY
 ```
 
-Start FastAPI:
+Start FastAPI
 
 ```bash
 uvicorn main:app --reload
 ```
 
-FastAPI runs on:
+FastAPI runs on
 
 ```
 http://127.0.0.1:8000
@@ -159,24 +207,28 @@ http://127.0.0.1:8000
 
 ---
 
-## Frontend
+# Frontend
 
-Simply open:
+Open
 
 ```
 frontend/index.html
 ```
 
-or use VS Code Live Server.
+or use
+
+- VS Code Live Server
 
 ---
 
-## API Endpoints
+# API Endpoints
 
-### Load Video
+## Load Video
+
+**POST**
 
 ```
-POST /chat
+/chat
 ```
 
 Request
@@ -189,10 +241,12 @@ Request
 
 ---
 
-### Ask Question
+## Ask Question
+
+**POST**
 
 ```
-POST /question
+/question
 ```
 
 Request
@@ -205,61 +259,103 @@ Request
 
 ---
 
-## Environment Variables
+# Environment Variables
 
-```
+```env
 GOOGLE_API_KEY=YOUR_GEMINI_API_KEY
+
+GROQ_API_KEY=YOUR_GROQ_API_KEY
 ```
 
 ---
 
-## Future Improvements
+# Example Workflow
 
-- Multiple language transcript support
-- Streaming AI responses
-- Conversation history
-- Source citations
-- Deploy on Render/Vercel
+```text
+Paste YouTube URL
+        │
+        ▼
+Extract Transcript
+        │
+        ▼
+Split into Chunks
+        │
+        ▼
+Generate Embeddings
+        │
+        ▼
+Store in FAISS
+        │
+        ▼
+User asks Question
+        │
+        ▼
+Retrieve Relevant Chunks
+        │
+        ▼
+Groq LLM
+        │
+        ▼
+Answer Returned
+```
+
+---
+
+# Future Improvements
+
+- Docker support
+- Deployment on Railway/Koyeb/Fly.io
 - User authentication
-- Chat history storage
-- Multiple video support
+- Chat history
+- Conversation memory
+- Streaming AI responses
+- Persistent vector database
+- Multiple language transcript support
+- Support multiple YouTube videos simultaneously
+- Source citations with timestamps
 
 ---
 
-## Screenshots
+# Screenshots
 
-<img width="960" height="482" alt="Screenshot 2026-07-28 124200" src="https://github.com/user-attachments/assets/b2fb522a-8b53-48c2-a639-486bd9d1da59" />
+## Home Page
 
-<img width="946" height="510" alt="Screenshot 2026-07-28 124253" src="https://github.com/user-attachments/assets/67b5181c-0ebe-4f2b-801e-3b03aa3a7c41" />
-
-<img width="944" height="439" alt="image" src="https://github.com/user-attachments/assets/1499c592-97a9-4588-8e59-1d28db8da665" />
-
-
-
-```
-Home Page
-
-Chat Interface
-
-AI Responses
-```
+<img width="960" height="482" alt="Home Page" src="https://github.com/user-attachments/assets/b2fb522a-8b53-48c2-a639-486bd9d1da59" />
 
 ---
 
-## Author
+## Chat Interface
+
+<img width="946" height="510" alt="Chat Interface" src="https://github.com/user-attachments/assets/67b5181c-0ebe-4f2b-801e-3b03aa3a7c41" />
+
+---
+
+## AI Responses
+
+<img width="944" height="439" alt="AI Responses" src="https://github.com/user-attachments/assets/1499c592-97a9-4588-8e59-1d28db8da665" />
+
+---
+
+# Author
 
 **Advaita Singh**
 
-Computer Science Engineering Student
+B.Tech Computer Science Engineering Student
 
-Interested in:
+### Interests
+
 - Artificial Intelligence
 - Machine Learning
-- Full Stack Development
 - Generative AI
+- Retrieval-Augmented Generation (RAG)
+- Backend Development
+- Full Stack Development
 
 ---
 
-## License
+# License
 
-This project is licensed under the MIT License.
+This project is licensed under the **MIT License**.
+
+Feel free to use, modify, and distribute this project under the terms of the MIT License.
+````
