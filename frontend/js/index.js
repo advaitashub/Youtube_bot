@@ -4,7 +4,7 @@ const askBtn = document.getElementById("askBtn");
 const chatBox = document.getElementById("chatBox");
 const linkInput = document.getElementById("link");
 const questionInput = document.getElementById("question");
-
+const BACKEND_URL="https://youtubebot-production.up.railway.app/"
 // ----------------------------
 // Add AI Message
 // ----------------------------
@@ -95,7 +95,7 @@ sendBtn.addEventListener("click", async () => {
 
     try {
 
-        const response = await fetch("http://localhost:3000/api/chat", {
+        const response = await fetch(`${BACKEND_URL}/chat`, {
 
             method: "POST",
 
@@ -146,7 +146,7 @@ askBtn.addEventListener("click", async () => {
 
     try {
 
-        const response = await fetch("http://localhost:3000/api/question", {
+        const response = await fetch(`${BACKEND_URL}/question`, {
 
             method: "POST",
 
