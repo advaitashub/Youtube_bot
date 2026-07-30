@@ -17,12 +17,14 @@ const chatWithVideo = async (req, res) => {
 
     } catch (error) {
 
-        console.log(error.message);
+        console.error("Message:", error.message);
 
-        res.status(500).json({
-            success: false,
-            message: "Unable to process video"
-        });
+        if (error.response) {
+            console.error("Status:", error.response.status);
+            console.error("Response:", error.response.data);
+        } else {
+           console.error(error);
+         }
 
     }
 
