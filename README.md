@@ -1,4 +1,4 @@
-````markdown
+
 # 🎥 YouTube Chat Bot
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
@@ -358,4 +358,4 @@ B.Tech Computer Science Engineering Student
 This project is licensed under the **MIT License**.
 
 Feel free to use, modify, and distribute this project under the terms of the MIT License.
-````
+
